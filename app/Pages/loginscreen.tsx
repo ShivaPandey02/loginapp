@@ -6,7 +6,6 @@ import '../Style/style.css';
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
   const navigate = useNavigate(); 
@@ -14,12 +13,10 @@ const LoginScreen = () => {
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     const storedPassword = localStorage.getItem('password');
-    const storedRememberMe = localStorage.getItem('rememberMe');
 
-    if (storedRememberMe && storedUsername && storedPassword) {
+    if (storedUsername && storedPassword) {
       setUsername(storedUsername);
       setPassword(storedPassword);
-      setRememberMe(true);
       navigate('/home');
     }
   }, [navigate]);
@@ -30,22 +27,15 @@ const LoginScreen = () => {
       return;
     }
 
-    if (rememberMe) {
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
-      localStorage.setItem('rememberMe', 'true');
-    } else {
-      localStorage.removeItem('username');
-      localStorage.removeItem('password');
-      localStorage.removeItem('rememberMe');
-    }
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
 
     setError('');
     navigate('/home');
   };
 
   return (
-    <div>
+    <div className='login-form'>
       <input
         type="text"
         value={username}
@@ -60,16 +50,6 @@ const LoginScreen = () => {
         placeholder="Password"
       />
       <br />
-      <label>
-        <input
-          className='checkbox'
-          type="checkbox"
-          checked={rememberMe}
-          onChange={(e) => setRememberMe(e.target.checked)}
-        />
-        Remember me
-      </label>
-      <br />
       {error && <p className="error">{error}</p>}
       <button onClick={handleLogin}>Login</button>
     </div>
@@ -82,7 +62,6 @@ const HomeScreen = () => {
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('password');
-    localStorage.removeItem('rememberMe');
     navigate('/');
   };
 

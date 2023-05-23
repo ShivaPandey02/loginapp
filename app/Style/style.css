@@ -40,15 +40,13 @@ input {
     color: rgb(239, 95, 95);
   }
 
-  .center-form {
+  .login-form {
+    text-align: center;
     /* display: flex; */
     justify-content: center;
     line-height: 50px;
     /* align-items: center; */
     height: 100vh;
-  }
-  .login-form {
-    text-align: center;
   }
   .home{
     text-align: center;
